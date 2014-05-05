@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>BasicRallyGrid</title>
+    <title>InteractiveGrid</title>
 
     <script type="text/javascript" src="/apps/2.0rc2/sdk.js"></script>
 
@@ -12,12 +12,22 @@
     componentCls: 'app',
     launch: function(){
 	console.log("Hello World");
-	this._loadData();
+	//this._loadData();
+	this._loadIterations();
+    },
+    _loadIterations: function(){
+	var iterComboBox = Ext.create('Ext.Container', {
+	items: [{
+	    xtype: 'rallyiterationcombobox'
+	 }],
+	 //renderTo: Ext.getBody().dom
+	});
+        this.add(iterComboBox);
     },
     //get data from Rally
     _loadData: function(){
 	var myStore = Ext.create('Rally.data.wsapi.Store', {
-	model: 'User Story',
+	model: 'Defect',
 	autoLoad: true,
 	//events that will fire
 	listeners: {
@@ -28,7 +38,7 @@
 	    },
 	    scope: this
 	},
-	fetch: ['FormattedID', 'Name', 'ScheduleState']
+	fetch: ['FormattedID', 'Name', 'Severity', 'Iteration']
        });
     },
     //create and show a grid of given stories
@@ -36,7 +46,7 @@
 	var myGrid= Ext.create('Rally.ui.grid.Grid', {
 	    store: myStore,
 	    columnCfgs: [
-		 'FormattedID', 'Name', 'ScheduleState'
+		 'FormattedID', 'Name', 'Severity', 'Iteration'
 	    ]
 	});
 	this.add(myGrid);
@@ -48,7 +58,7 @@
 
 
             Rally.launchApp('CustomApp', {
-                name:"BasicRallyGrid",
+                name:"InteractiveGrid",
 	            parentRepos:""
             });
 

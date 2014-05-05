@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>BasicRallyGrid</title>
+    <title>InteractiveGrid</title>
 
     <script type="text/javascript" src="/apps/2.0rc2/sdk.js"></script>
 
     <script type="text/javascript">
         Rally.onReady(function () {
-                Ext.define("CustomApp",{extend:"Rally.app.App",componentCls:"app",launch:function(){console.log("Hello World"),this._loadData()},_loadData:function(){var myStore=Ext.create("Rally.data.wsapi.Store",{model:"User Story",autoLoad:!0,listeners:{load:function(myStore,myData,success){this._loadGrid(myStore)},scope:this},fetch:["FormattedID","Name","ScheduleState"]})},_loadGrid:function(myStore){var myGrid=Ext.create("Rally.ui.grid.Grid",{store:myStore,columnCfgs:["FormattedID","Name","ScheduleState"]});this.add(myGrid),console.log("What is this?",this)}});
+                Ext.define("CustomApp",{extend:"Rally.app.App",componentCls:"app",launch:function(){console.log("Hello World"),this._loadIterations()},_loadIterations:function(){var iterComboBox=Ext.create("Ext.Container",{items:[{xtype:"rallyiterationcombobox"}]});this.add(iterComboBox)},_loadData:function(){var myStore=Ext.create("Rally.data.wsapi.Store",{model:"Defect",autoLoad:!0,listeners:{load:function(myStore,myData,success){this._loadGrid(myStore)},scope:this},fetch:["FormattedID","Name","Severity","Iteration"]})},_loadGrid:function(myStore){var myGrid=Ext.create("Rally.ui.grid.Grid",{store:myStore,columnCfgs:["FormattedID","Name","Severity","Iteration"]});this.add(myGrid),console.log("What is this?",this)}});
 
             Rally.launchApp('CustomApp', {
-                name:"BasicRallyGrid",
+                name:"InteractiveGrid",
 	            parentRepos:""
             });
 
